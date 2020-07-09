@@ -32,6 +32,10 @@ export class ConfigService {
       DB_HOST: Joi.string().default('localhost'),
       DB_PORT: Joi.number().default(3306),
       DB_DATABASE_NAME: Joi.string().required(),
+      GH_OAUTH_URL: Joi.string().required(),
+      GH_CLIENT_ID: Joi.string().required(),
+      GH_CLIENT_SECRET: Joi.string().required(),
+      GH_CALLBACK_URL: Joi.string().required()
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
@@ -48,13 +52,21 @@ export class ConfigService {
     return +this.envConfig.PORT;
   }
 
-//   public get jwtSecret(): string {
-//     return this.envConfig.JWT_SECRET;
-//   }
+  public get githubOAuthUrl(): string {
+    return this.envConfig.GH_OAUTH_URL;
+  }
 
-//   public get jwtExpireTime(): number {
-//     return +this.envConfig.JWT_EXPIRE;
-//   }
+  public get githubClientId(): string {
+    return this.envConfig.GH_CLIENT_ID;
+  }
+
+  public get githubClientSecret(): string {
+    return this.envConfig.GH_CLIENT_SECRET;
+  }
+
+  public get githubCallbackUrl(): string {
+    return this.envConfig.GH_CALLBACK_URL;
+  }
 
   public get dbHost(): string {
     return this.envConfig.DB_HOST;
@@ -63,14 +75,6 @@ export class ConfigService {
   public get dbPort(): number {
     return +this.envConfig.DB_PORT;
   }
-
-//   public get dbUsername(): string {
-//     return this.envConfig.DB_USERNAME;
-//   }
-
-//   public get dbPassword(): string {
-//     return this.envConfig.DB_PASSWORD;
-//   }
 
   public get dbName(): string {
     return this.envConfig.DB_DATABASE_NAME;

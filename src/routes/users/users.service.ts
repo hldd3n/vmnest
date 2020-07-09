@@ -16,7 +16,7 @@ export class UsersService {
     async registerUser(user: UserRegisterDTO) {
         const userFound = await this.usersRepository.findOne({ where: { username: user.username } });
         if (userFound) {
-            throw new Error('User already exists');
+            throw new Error('User with that username already exists');
         }
 
         const newUser = new User();
@@ -24,9 +24,9 @@ export class UsersService {
         newUser.password = await bcrypt.hash(user.password, 10);
 
         await this.usersRepository.create(newUser);
-        const result = await this.usersRepository.save(newUser)
+        const registeredUser = await this.usersRepository.save(newUser)
 
-        return result;
+        return registeredUser;
     }
 
     async logIn(user: UserLoginDTO) {

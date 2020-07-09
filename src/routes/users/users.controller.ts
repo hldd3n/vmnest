@@ -9,11 +9,13 @@ import {
 import { UsersService } from './users.service';
 import { UserRegisterDTO } from '../../models/user-register.dto';
 import { UserLoginDTO } from '../../models/user-login.dto';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('users')
 export class UsersController {
     constructor(
         private readonly userService: UsersService,
+        private readonly authService: AuthService,
     ) { }
 
     @Post('login')
@@ -22,12 +24,12 @@ export class UsersController {
         if (!loggedIn) {
             throw new UnauthorizedException('Wrong Credentials!')
         }
-        return JSON.stringify('https://github.com/login/oauth/authorize?client_id=61347fbe438d2164b7e9&redirect_uri=http://localhost:3000/auth/github');
+        const redirectUrl = this.authService.getRedirectUrl();
+        return JSON.stringify(redirectUrl)
     }
 
     @Post('register')
     async register(@Body() user: UserRegisterDTO) {
-        const loggedIn = await this.userService.logIn(user);
         try {
             await this.userService.registerUser(user);
             return JSON.stringify('Registration successful!')
