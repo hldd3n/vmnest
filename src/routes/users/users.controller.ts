@@ -5,7 +5,10 @@ import {
     HttpException,
     HttpStatus,
     UnauthorizedException,
+    Res,
 } from '@nestjs/common';
+import { Response } from 'express';
+
 import { UsersService } from './users.service';
 import { UserRegisterDTO } from '../../models/user-register.dto';
 import { UserLoginDTO } from '../../models/user-login.dto';
@@ -19,13 +22,15 @@ export class UsersController {
     ) { }
 
     @Post('login')
-    async login(@Body() user: UserLoginDTO) {
+    async login(@Body() user: UserLoginDTO, @Res() response: Response) {
         const loggedIn = await this.userService.logIn(user);
         if (!loggedIn) {
             throw new UnauthorizedException('Wrong Credentials!')
         }
-        const redirectUrl = this.authService.getRedirectUrl();
-        return JSON.stringify(redirectUrl)
+        const token = await this.authService.signUser(user);
+        const redirectUrl = this.authService.getRedirectUrl(user.username);
+        response.cookie('X-VMNEST-TOKEN', token, { httpOnly: false});
+        return response.send({ redirectUrl })
     }
 
     @Post('register')
