@@ -29,7 +29,7 @@ export class UsersController {
         }
         const token = await this.authService.signUser(user);
         const redirectUrl = this.authService.getRedirectUrl(user.username);
-        response.cookie('X-VMNEST-TOKEN', token, { httpOnly: false});
+        response.cookie('X-VMNEST-TOKEN', token, { httpOnly: false });
         return response.send({ redirectUrl })
     }
 

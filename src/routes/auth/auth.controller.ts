@@ -9,7 +9,7 @@ export class AuthController {
     ) { }
 
     @Get('/github')
-    async getCode(@Query('code') code, @Res() response: Response)  {
+    async getCode(@Query('code') code, @Res() response: Response) {
         const accessToken = await this.authService.getAccessToken(code);
         response.cookie('X-GITHUB-TOKEN', accessToken)
         response.redirect('http://localhost:4200/vmware/',)

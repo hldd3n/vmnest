@@ -4,8 +4,8 @@ import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/config.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot()
-  ],
+    imports: [
+        TypeOrmModule.forRoot()
+    ],
 })
 export class DatabaseModule { }

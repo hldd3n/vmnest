@@ -6,12 +6,12 @@ import * as cors from 'cors';
 
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule);
 
-  app.enableCors({
-    origin: 'http://localhost:4200',
-    credentials: true
-  });
-  await app.listen(app.get(ConfigService).port);
+    app.enableCors({
+        origin: 'http://localhost:4200',
+        credentials: true
+    });
+    await app.listen(app.get(ConfigService).port);
 }
 bootstrap();
