@@ -33,7 +33,7 @@ export class AuthService {
     }
 
     public getRedirectUrl(username) {
-        const redirect_url = `${this.OAuthUrl}/authorize?client_id=${this.clientId}&redirect_url=${this.callbackUrl}?username=${username}`
+        const redirect_url = `${this.OAuthUrl}/authorize?client_id=${this.clientId}&redirect_url=${this.callbackUrl}`
         return redirect_url
     }
 }
